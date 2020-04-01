@@ -25,7 +25,7 @@ egrep -w '22/(tcp|udp)' /etc/services
 
 sudo lsof -i -P -n | grep LISTEN
 sudo netstat -tulpn | grep LISTEN
-sudo lsof -i:22 ## see a specific port such as 22
+sudo lsof -i:22 ## See a specific port such as 22
 sudo lsof -nP -iTCP -sTCP:LISTEN
 
 sudo watch ss -tulpn
@@ -38,7 +38,49 @@ sudo ss -tulwn
 # -n : Don’t resolve service names i.e. don’t use DNS
 
 sudo nmap -sT -O localhost
-sudo nmap -sU -O 192.168.2.13 ##[ list open UDP ports ]##
-sudo nmap -sT -O 192.168.2.13 ##[ list open TCP ports ]##
+sudo nmap -sU -O 192.168.2.13 # List open UDP ports
+sudo nmap -sT -O 192.168.2.13 # List open TCP ports 
+```
+
+* dpkg/.deb
+
+```
+dpkg -l # List installed packages
+dpkg -s mypkg # Get status of specific package
+
+apt list --installed # List installed packages
+apt list # List *all* packages in available repos
+dpkg -b ./mypkg ./mypkg_1.0.0-0_amd64.deb
+dpkg -I mypkg.deb # Inspect information 
+dpkg -c mypkg.deb # Review the contents
+dpkg -X mypkg.deb /tmp/exctact/ # Extract the contents
+sudo apt install ./mypkg.deb # Install 
+sudo dpkg -i mypkg.deb # Install
+dpkg --remove package_name # Leaves config files
+dpkg --purge package_name  # Removes config files too
+
+# Structure for a package
+mypkg/             # Directory
+├── DEBIAN/        # Directory
+│   └── control    # Control file
+│   └── postinst   # Post install script
+├── etc/my.ini     # Optionally any other files that you need to include
+└── opt/mylib/     # on the destination system during installation
+
+# This is a minimal example of the DEBIAN/control file:
+-
+Package: mypkg
+Version: 1.0.0
+Maintainer: Your Name <you@example.com>
+Description: My test package, please ignore
+Homepage: https://github.com/username/projectname
+Architecture: all
+Depends: git, python3 (>=3.5), openjdk-8-jre-headless|openjdk-8-jre|openjdk-8-jdk-headless|openjdk-8-jdk
+-
+
+# Convert a .deb to .rpm and other formats
+sudo apt install alien
+alien --help
+alien --to-rpm my_pkg.deb
 
 ```
