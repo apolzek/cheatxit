@@ -112,6 +112,15 @@ alien --help
 alien --to-rpm my_pkg.deb
 
 ```
+
+* PPA
+
+```
+sudo add-apt-repository --remove ppa:<ppa_name>/ppa
+sudo ls /etc/apt/sources.list.d
+sudo rm -i /etc/apt/sources.list.d/<ppa_name.list>
+```
+
 ### Git(github/gitlab)
 
 ```
