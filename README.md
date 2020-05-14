@@ -1,4 +1,4 @@
-# cheatxit
+# mycheatsheet
 
 📑 Cheat sheet for professionals working with technology
 
@@ -54,7 +54,7 @@ sudo nmap -sU -O 192.168.2.13 # List open UDP ports
 sudo nmap -sT -O 192.168.2.13 # List open TCP ports 
 ```
 
-* check and list active SSH connections in Linux
+* Check and list active SSH connections in Linux
 
 ```
 ss | grep -i ssh
