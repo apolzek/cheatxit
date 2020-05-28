@@ -131,6 +131,13 @@ pwgen 14 1 # AhchohNukoop8X
 
 ```
 
+* FTP upload 
+
+```
+curl -T my-local-file.txt ftp://ftp.example.com --user user:secret
+ftp-upload -h {HOST} -u {USERNAME} --password {PASSWORD} -d {SERVER_DIRECTORY} {FILE_TO_UPLOAD}
+```
+
 
 ### Git(github/gitlab)
 
