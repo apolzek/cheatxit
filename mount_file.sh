@@ -1,2 +1,1 @@
-rm README.md
-cat * */* >> README.md
+rm README.md && cat * */* >> README.md
