@@ -122,3 +122,8 @@ ssh-keygen -t rsa
 ssh-keygen -t rsa -b 4096
 ssh-copy-id <remote_user>@<remote_ip>
 ```
+IP/Networking
+
+```
+hostname -I | awk '{print $1}'
+```
