@@ -127,3 +127,5 @@ IP/Networking
 ```
 hostname -I | awk '{print $1}'
 ```
+Name file manager
+xdg-mime query default inode/directory 
