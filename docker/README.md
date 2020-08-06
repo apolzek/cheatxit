@@ -1,56 +1,56 @@
 
 # Docker
 
-## Referências
+## References
 
-| Título                      | URL                                                  |
+| Title                       | URL                                                  |
 |-----------------------------|------------------------------------------------------|
 | Docker para desenvolvedores | https://github.com/gomex/docker-para-desenvolvedores |
 
 
-### Instalar Docker engine no GNU/Linux (sudo)
+### Install Docker Engine on GNU / Linux (sudo required)
 ```
 wget -qO- https://get.docker.com/ | sh
 wget -qO- https://get.docker.com/gpg | sudo apt-key add -
 pip install docker-compose
 ```
 
-### Instalar Docker machine no GNU/Linux (sudo)
+### Install Docker Machine on GNU / Linux (sudo required)
 ```
 curl -L https://github.com/docker/machine/releases/download/v0.10.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine && \
 chmod +x /usr/local/bin/docker-machine
 docker-machine version
 ```
 
-### Comandos básicos
+### Basic commands
 ```
 docker image list
 docker image pull python
 docker image inspect python
 ```
 
-* Rodar um container 
+* Run container 
 ```
-docker container run <parâmetros> <imagem> <CMD> <argumentos>
+docker container run <parameters> <image> <CMD> <args>
 ```
 
-Os parâmetros mais utilizados na execução do contêiner são:
+The parameters most used in the execution of the container are:
 
-| Parâmetro | Explicação                                                                    |
-|-----------|-------------------------------------------------------------------------------|
-| -d        | Execução do contêiner em background                                           |
-| -i        | Modo interativo. Mantém o STDIN aberto mesmo sem console anexado              |
-| -t        | Aloca uma pseudo TTY                                                          |
-| --rm      | Automaticamente remove o contêiner após finalização (**Não funciona com -d**) |
-| --name    | Nomear o contêiner                                                            |
-| -v        | Mapeamento de volume                                                          |
-| -p        | Mapeamento de porta                                                           |
-| -m        | Limitar o uso de memória RAM                                                  |
-| -c        | Balancear o uso de CPU                                                        |
+| Parâmetro | Explicação                                                                         |
+|-----------|------------------------------------------------------------------------------------|
+| -d        | Container execution in the background                                              | 
+| -i        | Interactive mode. Keeps STDIN open even without a console attached                 |
+| -t        | Allocates a pseudo TTY                                                             |
+| --rm      | Automatically removes the container after completion (** Does not work with -d **) |
+| --name    | Name                                                                               |
+| -v        | Volume mapping                                                                     |
+| -p        | Port mapping                                                                       |
+| -m        | Limit the use of RAM                                                               |
+| -c        | Balance CPU usage                                                                  |
 
 
 ```
-docker container run -it --rm --name meu_python python bash
+docker container run -it --rm --name mypython python bash
 docker container run -it --rm -v "<host>:<container>" python
 
 docker container run -it --rm -p "<host>:<container>" python
@@ -60,32 +60,31 @@ docker container run -it --rm -m 512M python
 docker container run -it --rm -c 512 python
 ```
 
-* Listar containers
+* List containers
 ```
-docker container ls <parâmetros>
+docker container ls <parameters>
 ```
 
-Os parâmetros mais utilizados na execução do contêiner são:
+The parameters most used in the execution of the container are:
 
-| Parâmetro | Explicação                                                            |
+| Parameter | Explanation                                                            |
 |-----------|-----------------------------------------------------------------------|
-| -a        | Lista todos os contêineres, inclusive os desligados                   |
-| -l        | Lista os últimos contêineres, inclusive os desligados                 |
-| -n        | Lista os últimos N contêineres,  inclusive os desligados              |
-| -q        | Lista apenas os ids dos contêineres, ótimo para utilização em scripts |
+| -a        | Lists all containers, including unconnected ones                      |
+| -l        | Lists the latest containers, including unplugged ones                 |
+| -n        | Lists the last N containers, including disconnected ones              |
+| -q        | List only container ids, great for scripting                          |
 
 ```
-docker container stop meu_python
-docker container start meu_python
+docker container stop mypython
+docker container start mypython
 
 ```
 
 ---
 
-### Outros
+### Others
 
-* Mais usados
-
+* Commonly used
 ```
 docker run -d --name konga --network host -p 1337:1337 pantsel/konga
 docker run -d --hostname my-rabbit --name rabbitlocal -p 8080:15672 -p 5672:5672 -p 25676:25676 rabbitmq:3-management
@@ -93,7 +92,6 @@ docker exec -it <container_id_or_name> echo "Hello from container!"
 ```
 
 * Troubleshooting
-
 ```
 docker run busybox ping -c 1 192.203.230.10
 docker run busybox nslookup google.com
