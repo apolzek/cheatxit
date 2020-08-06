@@ -77,9 +77,73 @@ The parameters most used in the execution of the container are:
 ```
 docker container stop mypython
 docker container start mypython
-
 ```
 
+* Create image
+```
+docker container run -it --name containerxyz ubuntu:16.04 bash
+
+apt-get update
+apt-get install nginx -y
+exit
+
+docker container stop containerxyz
+
+docker container commit containerxyz myubuntu:nginx
+docker container run -it --rm myubuntu:nginx dpkg -l nginx
+```
+
+* Dockerfile and build image
+```
+FROM ubuntu:16.04
+RUN apt-get update && apt-get install nginx -y
+COPY testfile /tmp/testfile
+CMD bash
+```
+
+```
+docker image build -t myubuntu:nginx_auto .
+```
+
+* Dockerhub/Images
+
+```
+docker tag docker-is-cool DOCKER_ID/docker-is-cool:latest
+docker login
+docker image push
+docker images rm -f IMAGE_ID
+docker rmi -f IMAGE_ID
+```
+
+* Volume
+
+```
+# Requires the host to have a specific folder for the container to function properly
+docker container run -v /var/lib/containerx:/var ubuntu
+```
+
+
+```
+docker create -v /dbdata --name dbdata postgres /bin/true
+docker container run -d --volumes-from dbdata --name db2 postgres
+```
+
+```
+docker volume create --name dbdata
+docker container run -d -v dbdata:/var/lib/data postgres
+```
+
+* Network 
+
+#172.17.0.0/16
+
+```
+docker network ls
+
+docker container run -d --name db -e MYSQL_ROOT_PASSWORD=myp@ss mysql
+docker container run -d -p 80:80 --name app --link db tutum/apache-php
+docker container exec -it app ping db
+```
 ---
 
 ### Others
