@@ -1,5 +1,5 @@
 
-# Docker
+# Docker / Docker Swarm
 
 ## References
 
@@ -36,7 +36,7 @@ docker container run <parameters> <image> <CMD> <args>
 
 The parameters most used in the execution of the container are:
 
-| Parameter | Explanation                                                                         |
+| Parameter | Explanation                                                                        |
 |-----------|------------------------------------------------------------------------------------|
 | -d        | Container execution in the background                                              | 
 | -i        | Interactive mode. Keeps STDIN open even without a console attached                 |
@@ -47,7 +47,6 @@ The parameters most used in the execution of the container are:
 | -p        | Port mapping                                                                       |
 | -m        | Limit the use of RAM                                                               |
 | -c        | Balance CPU usage                                                                  |
-
 
 ```
 docker container run -it --rm --name mypython python bash
@@ -63,6 +62,11 @@ docker container run -it --rm -c 512 python
 * List containers
 ```
 docker container ls <parameters>
+```
+
+* Remove all containers
+```
+docker rm $(docker ps -a -q) -f
 ```
 
 The parameters most used in the execution of the container are:
@@ -135,9 +139,10 @@ docker container run -d -v dbdata:/var/lib/data postgres
 
 * Network 
 
-#172.17.0.0/16
+
 
 ```
+#172.17.0.0/16
 docker network ls
 
 docker container run -d --name db -e MYSQL_ROOT_PASSWORD=myp@ss mysql
@@ -168,5 +173,64 @@ docker run --dns 10.0.0.2 busybox nslookup google.com
 }
 sudo service docker restart
 docker run busybox nslookup google.com
+
+```
+
+### Docker Swarm
+
+```
+# Set up master
+docker swarm init --advertise-addr <ip>   
+
+# Force manager on broken cluster
+docker swarm init --force-new-cluster -advertise-addr <ip>   
+
+# Get token to join workers
+docker swarm join-token worker
+
+# Get token to join new manager
+docker swarm join-token manager           
+
+# Join host as a worker
+docker swarm join <server> worker
+
+docker swarm leave
+
+docker swarm unlock                       
+
+# Print key needed for 'unlock'
+docker swarm unlock-key                   
+
+# Print swarm node list
+docker node ls                           
+docker node rm <node id>
+docker node inspect --pretty <node id>
+
+# Promote node to manager
+docker node promote <node id>             
+docker node demote <node id>
+
+# Rebalancing
+for svc in $(docker service ls -q) ; do docker service update $svc --force ; done
+
+docker stack ls
+docker stack rm <name>
+
+docker service create <image>
+docker service create --name <name> --replicas <number of replicas> <image>
+docker service scale <name>=<number of replicas>
+docker service rm <service id|name>
+
+# List all services
+docker service ls                        
+
+# List all tasks for given service (includes shutdown/failed)                            
+docker service ps <service id|name>                                 
+
+# List running (acitve) tasks for given service
+docker service ps --filter desired-state=running <service id|name>   
+
+# Print console log of a service
+docker service logs --follow <service id|name>                       
 
 ```
