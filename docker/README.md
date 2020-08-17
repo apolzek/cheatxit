@@ -148,16 +148,11 @@ docker container exec -it app ping db
 ```
 ---
 
-### Others
+### Troubleshooting
 
-* Commonly used
-```
-docker run -d --name konga --network host -p 1337:1337 pantsel/konga
-docker run -d --hostname my-rabbit --name rabbitlocal -p 8080:15672 -p 5672:5672 -p 25676:25676 rabbitmq:3-management
-docker exec -it <container_id_or_name> echo "Hello from container!"
-```
 
-* Troubleshooting
+* Useful commands
+
 ```
 docker run busybox ping -c 1 192.203.230.10
 docker run busybox nslookup google.com
@@ -172,6 +167,7 @@ sudo service docker restart
 docker run busybox nslookup google.com
 
 ```
+---
 
 ### Docker Swarm
 
@@ -233,6 +229,8 @@ docker service ps --filter desired-state=running <service id|name>
 docker service logs --follow <service id|name>                       
 
 ```
+
+---
 
 ### Most used services
 
