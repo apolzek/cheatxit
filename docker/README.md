@@ -5,6 +5,7 @@
 
 | Title                       | URL                                                  |
 |-----------------------------|------------------------------------------------------|
+| Docs                        | https://docs.docker.com/                             |
 | Docker para desenvolvedores | https://github.com/gomex/docker-para-desenvolvedores |
 | Curso de Docker Completo  | [URL](https://www.youtube.com/playlist?list=PLg7nVxv7fa6dxsV1ftKI8FAm4YD6iZuI4)
 
