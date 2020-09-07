@@ -3,11 +3,11 @@
 
 ## References
 
-| Title                       | URL                                                  |
-|-----------------------------|------------------------------------------------------|
-| Docs                        | https://docs.docker.com/                             |
-| Docker para desenvolvedores | https://github.com/gomex/docker-para-desenvolvedores |
-| Curso de Docker Completo  | [URL](https://www.youtube.com/playlist?list=PLg7nVxv7fa6dxsV1ftKI8FAm4YD6iZuI4)
+| Title                       | URL                                                                             |
+|-----------------------------|---------------------------------------------------------------------------------|
+| Docs                        | https://docs.docker.com/                                                        |
+| Docker para desenvolvedores | https://github.com/gomex/docker-para-desenvolvedores                            |
+| Curso de Docker Completo    | [URL](https://www.youtube.com/playlist?list=PLg7nVxv7fa6dxsV1ftKI8FAm4YD6iZuI4) |
 
 ## Install Docker
 
@@ -53,7 +53,7 @@ The parameters most used in the execution of the container are:
 
 | Parameter | Explanation                                                                        |
 |-----------|------------------------------------------------------------------------------------|
-| -d        | Container execution in the background                                              | 
+| -d        | Container execution in the background                                              |
 | -i        | Interactive mode. Keeps STDIN open even without a console attached                 |
 | -t        | Allocates a pseudo TTY                                                             |
 | --rm      | Automatically removes the container after completion (** Does not work with -d **) |
@@ -81,17 +81,26 @@ docker container ls <parameters>
 
 The parameters most used in the execution of the container are:
 
-| Parameter | Explanation                                                            |
-|-----------|-----------------------------------------------------------------------|
-| -a        | Lists all containers, including unconnected ones                      |
-| -l        | Lists the latest containers, including unplugged ones                 |
-| -n        | Lists the last N containers, including disconnected ones              |
-| -q        | List only container ids, great for scripting                          |
+| Parameter | Explanation                                              |
+|-----------|----------------------------------------------------------|
+| -a        | Lists all containers, including unconnected ones         |
+| -l        | Lists the latest containers, including unplugged ones    |
+| -n        | Lists the last N containers, including disconnected ones |
+| -q        | List only container ids, great for scripting             |
 
 
 * Remove all containers
 ```
 docker rm $(docker ps -a -q) -f
+```
+
+* View container processes/ consume/ info
+```
+docker container top ID_OR_NAME
+docker container stats
+docker container stats ID_OR_NAME
+docker container inspect ID_OR_NAME
+docker container inspect -f {{.NetworkSettings}} ID_OR_NAME
 ```
 
 * Stop and Start containers
@@ -127,7 +136,6 @@ docker image build -t myubuntu:nginx_auto .
 ```
 
 * Dockerhub/Images
-
 ```
 docker tag docker-is-cool DOCKER_ID/docker-is-cool:latest
 docker login
@@ -137,7 +145,6 @@ docker rmi -f IMAGE_ID
 ```
 
 * Volumes
-
 ```
 # Requires the host to have a specific folder for the container to function properly
 docker container run -v /var/lib/containerx:/var ubuntu
@@ -154,14 +161,26 @@ docker container run -d -v dbdata:/var/lib/data postgres
 ```
 
 * Network 
-
 ```
-#172.17.0.0/16
+# Bridge => Internal communication between containers, Standard network 172.17.0.0/16
+# Host => You don't need to publish a door. Does not work in swarm mode
+# None => Does not have external access or with other containers
+
+iptables -t nat -L
+
 docker network ls
+docker network inspect NETWORK_NAME
 
 docker container run -d --name db -e MYSQL_ROOT_PASSWORD=myp@ss mysql
 docker container run -d -p 80:80 --name app --link db tutum/apache-php
+docker container run -d -P nginx # Publish port randomly
 docker container exec -it app ping db
+
+docker container run --name net_host1 -d --network host nginx:alpine
+docker container run -d --name h_none --network none nginx:alpine
+docker network create my_custom_net --subnet 192.168.134.0/24 --gateway 192.168.134.1
+docker container run --name webhost -d --network my_custom_net nginx
+docket network prune
 ```
 ---
 
@@ -182,7 +201,6 @@ docker run --dns 10.0.0.2 busybox nslookup google.com
 }
 sudo service docker restart
 docker run busybox nslookup google.com
-
 ```
 ---
 
@@ -243,8 +261,7 @@ docker service ps <service id|name>
 docker service ps --filter desired-state=running <service id|name>   
 
 # Print console log of a service
-docker service logs --follow <service id|name>                       
-
+docker service logs --follow <service id|name>
 ```
 
 ---
@@ -255,5 +272,4 @@ docker service logs --follow <service id|name>
 docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 docker run -d --hostname my-rabbit --name rabbitlocal -p 8080:15672 -p 5672:5672 -p 25676:25676 rabbitmq:3-management
 docker run -d --name konga --network host -p 1337:1337 pantsel/konga
-
 ```
