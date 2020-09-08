@@ -1,1 +1,0 @@
-rm README.md
