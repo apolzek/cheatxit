@@ -96,11 +96,30 @@ docker rm $(docker ps -a -q) -f
 
 * View container processes/ consume/ info
 ```
-docker container top ID_OR_NAME
+docker container top ID_OR_NAME 
 docker container stats
 docker container stats ID_OR_NAME
 docker container inspect ID_OR_NAME
 docker container inspect -f {{.NetworkSettings}} ID_OR_NAME
+```
+
+* Inspect
+```
+# Get an instance’s IP address
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $INSTANCE_ID 
+
+# Get an instance’s MAC address
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.MacAddress}}{{end}}' $INSTANCE_ID
+
+# Get an instance’s log path
+docker inspect --format='{{.LogPath}}' $INSTANCE_ID
+
+# Get an instance’s image name
+docker inspect --format='{{.Config.Image}}' $INSTANCE_ID
+
+# List all port bindings
+docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' $INSTANCE_ID
+
 ```
 
 * Stop and Start containers
@@ -183,7 +202,6 @@ docker container run --name webhost -d --network my_custom_net nginx
 docket network prune
 docker network connect NETWORK_NAME CONTAINER_ID_OR_NAME
 ```
----
 
 * Dockerhub 
 ```
@@ -191,6 +209,8 @@ docker build -t <your_username>/my-first-repo .
 docker run <your_username>/my-first-repo
 docker push <your_username>/my-first-repo
 ```
+
+---
 
 ### Troubleshooting
 
