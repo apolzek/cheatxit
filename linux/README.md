@@ -141,6 +141,9 @@ xdg-mime query default inode/directory
 
 ## Others
 
+
+```
 #fuser centos
-```yum install psmisc```
+yum install psmisc
+```
 
