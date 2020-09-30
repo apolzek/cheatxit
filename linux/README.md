@@ -136,3 +136,11 @@ xdg-mime query default inode/directory
 ```
  ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
 ````
+
+---
+
+## Others
+
+#fuser centos
+```yum install psmisc```
+
