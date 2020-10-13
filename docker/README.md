@@ -262,10 +262,10 @@ docker swarm unlock-key
 docker node ls                           
 docker node rm <node id>
 docker node inspect --pretty <node id>
+docker node update <node> --availability active
 
 # Promote node to manager
 docker node promote <node id>             
-docker node demote <node id>
 
 # Rebalancing
 for svc in $(docker service ls -q) ; do docker service update $svc --force ; done
