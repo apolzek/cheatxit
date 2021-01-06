@@ -9,7 +9,7 @@
 | Docker para desenvolvedores | https://github.com/gomex/docker-para-desenvolvedores                            |
 | Curso de Docker Completo    | [URL](https://www.youtube.com/playlist?list=PLg7nVxv7fa6dxsV1ftKI8FAm4YD6iZuI4) |
 
-## Install Docker
+### Install Docker
 
 * https://docs.docker.com/get-docker/
 * https://docs.docker.com/compose/install/
@@ -40,8 +40,8 @@ docker version
 docker info
 
 docker image list
-docker image pull python
-docker image inspect python
+docker image pull IMAGE_ID (Ex: docker image pull python)
+docker image inspect IMAGE_ID (Ex: docker image inspect postgres:12.2)
 ```
 
 * Run container 
@@ -89,9 +89,10 @@ The parameters most used in the execution of the container are:
 | -q        | List only container ids, great for scripting             |
 
 
-* Remove all containers
+* Remove all containers/images
 ```
 docker rm $(docker ps -a -q) -f
+docker rmi -f $(docker images -a -q)
 ```
 
 * View container processes/ consume/ info
@@ -107,9 +108,11 @@ docker container inspect -f {{.NetworkSettings}} ID_OR_NAME
 ```
 # Get an instance’s IP address
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $INSTANCE_ID 
+(Output ex: 172.17.0.2)
 
 # Get an instance’s MAC address
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.MacAddress}}{{end}}' $INSTANCE_ID
+(Output ex: 02:42:ac:11:00:02)
 
 # Get an instance’s log path
 docker inspect --format='{{.LogPath}}' $INSTANCE_ID
@@ -119,7 +122,7 @@ docker inspect --format='{{.Config.Image}}' $INSTANCE_ID
 
 # List all port bindings
 docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' $INSTANCE_ID
-
+(Output ex: 80/tcp -> 80)
 ```
 
 * Stop and Start containers
