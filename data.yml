@@ -1,0 +1,10 @@
+linux:
+  id: <id>
+  update:
+  - update linux
+  - sudo apt-get update
+network:
+  id: <id>
+  update:
+  - update linux
+  - sudo apt-get update
