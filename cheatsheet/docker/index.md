@@ -25,7 +25,7 @@ docker info
 #### Images
 
 ```
-# Docker images
+# List all images
 docker image list
 docker image ls
 
@@ -47,6 +47,7 @@ docker rmi -f $(docker images -a -q)
 
 #### Container
 
+:heavy_dollar_sign: 
 ```
 docker container run <parameters> <image> <CMD> <args>
 ```
@@ -75,7 +76,7 @@ docker container run -it --rm -p 80:8080 python
 docker container run -it --rm -m 512M python
 docker container run -it --rm -c 512 python
 ```
-
+:heavy_dollar_sign:
 
 ```
 docker container ls <parameters>
