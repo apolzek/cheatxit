@@ -137,9 +137,9 @@ if __name__ == "__main__":
 
 
 
-    call_manager(sys.argv)
+    # call_manager(sys.argv)
 
-    sys.exit(2)
+    # sys.exit(2)
 
     if(len(sys.argv) == 2):
         if(sys.argv[1] == "list"):
