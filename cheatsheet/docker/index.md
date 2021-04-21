@@ -47,7 +47,7 @@ docker rmi -f $(docker images -a -q)
 
 #### Container
 
-:heavy_dollar_sign: 
+:heavy_dollar_sign: container run
 ```
 docker container run <parameters> <image> <CMD> <args>
 ```
@@ -67,16 +67,32 @@ The parameters most used in the execution of the container are:
 | -c        | Balance CPU usage                                                                  |
 
 ```
-docker container run -it --rm --name mypython python bash
-docker container run -it --rm -v "<host>:<container>" python
+docker container run -it --rm --name <NAME> <IMAGE> <COMMAND>
+$ docker container run -it --rm --name python python bash
 
-docker container run -it --rm -p "<host>:<container>" python
-docker container run -it --rm -p 80:8080 python
+docker run -d -it --name <NAME> --mount type=bind,source="<LOCAL_FOLDER>",target=<CONTAINER_FOLDER> <IMAGE>:<TAG>
+$ docker run -d -it --name example --mount type=bind,source="$(pwd)",target=/app nginx:latest
 
-docker container run -it --rm -m 512M python
-docker container run -it --rm -c 512 python
+docker run -d -it --name example -v "<LOCAL_FOLDER>":/<CONTAINER_FOLDER> <IMAGE>:<TAG>
+$ docker run -d -it --name example -v "$(pwd)":/app nginx:latest
+
+docker container run -it --rm -p "<HOST_PORT>:<CONTAINER_PORT>" <IMAGE>:<TAG>
+$ docker container run -it --rm -d -p 8080:80 nginx:latest
+
+# Limit memory
+docker container run -it --rm -m <SIZE>M <IMAGE>:<TAG>
+$ docker container run -it --rm -m 512M apline:latest
+
+# Limit cpu
+docker container run -it --rm -c <SIZE> <IMAGE>:<TAG>
+$ docker container run -it --rm -c 512 alpine:latest
+
+# Check cpu limit
+docker container inspect -f {{.HostConfig.CpuShares}} <CONTAINER_ID_OR_NAME> 
+$ docker container inspect -f {{.HostConfig.CpuShares}} 49ecaa5707b5
 ```
-:heavy_dollar_sign:
+
+:heavy_dollar_sign:container ls 
 
 ```
 docker container ls <parameters>
@@ -94,9 +110,8 @@ The parameters most used in the execution of the container are:
 
 
 ```
-# Remove all containers/images
-docker rm $(docker ps -a -q) -f
-
+# Remove all containers
+docker rm $(docker ps -a -q) -f 2>/dev/null  || echo "0 containers running" 
 ```
 
 * View container processes, consume and info
@@ -313,3 +328,6 @@ docker run -d --name konga --network host -p 1337:1337 pantsel/konga
 docker run -d -p 3000:3000 --name grafana grafana/grafana:6.5.0
 docker run -it -v $PWD:/app -w /app --entrypoint "" hashicorp/terraform:light sh
 ```
+
+
+### Alias
