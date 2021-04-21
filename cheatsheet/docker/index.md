@@ -8,30 +8,9 @@
 | Docs                        | https://docs.docker.com/                                                        |
 | Docker para desenvolvedores | https://github.com/gomex/docker-para-desenvolvedores                            |
 | Curso de Docker Completo    | [URL](https://www.youtube.com/playlist?list=PLg7nVxv7fa6dxsV1ftKI8FAm4YD6iZuI4) |
+| Install docker-compose      |  https://docs.docker.com/compose/install/                                       |
 
-### Install Docker
-
-* https://docs.docker.com/get-docker/
-* https://docs.docker.com/compose/install/
-* https://docs.docker.com/engine/swarm/swarm-tutorial/create-swarm/
-* https://docs.docker.com/machine/install-machine/
-
-### Install Docker Engine on GNU / Linux (sudo required)
-
-```
-wget -qO- https://get.docker.com/ | sh
-wget -qO- https://get.docker.com/gpg | sudo apt-key add -
-pip install docker-compose
-```
-
-### Install Docker Machine on GNU / Linux (sudo required)
-```
-curl -L https://github.com/docker/machine/releases/download/v0.10.0/docker-machine-`uname -s`-`uname -m` > /usr/local/bin/docker-machine && \
-chmod +x /usr/local/bin/docker-machine
-docker-machine version
-```
-
-### Basic commands
+### Commands
 ```
 # Version / Shows if you have client and server
 docker version 
@@ -39,8 +18,10 @@ docker version
 # Overview Docker on the machine
 docker info
 
+# Docker images
 docker image list
-docker image pull IMAGE_ID (Ex: docker image pull python)
+docker image pull IMAGE_ID:tag
+> docker image pull python:latest
 docker image inspect IMAGE_ID (Ex: docker image inspect postgres:12.2)
 ```
 
