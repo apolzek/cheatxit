@@ -47,19 +47,25 @@ $ docker image rm python:latest -f
 docker rmi -f $(docker images -a -q)
 ```
 
-:heavy_dollar_sign: create image
+:heavy_dollar_sign: create image(commit mode)
 
 ```
-docker container run -it --name containerxyz ubuntu:16.04 bash
+docker container run -it --name <NAME_YOU_CHOSE> ubuntu:16.04 bash
+$ docker container run -it --name example ubuntu:16.04 bash
 
 apt-get update
 apt-get install nginx -y
-exit
+(crtl p + q)
 
-docker container stop containerxyz
+docker container stop <NAME_YOU_CHOSE>
+$ docker container stop example
 
-docker container commit containerxyz myubuntu:nginx
-docker container run -it --rm myubuntu:nginx dpkg -l nginx
+docker container commit <NAME_YOU_CHOSE> <NEW_NAME_YOU_CHOSE>:<TAG>
+$ docker container commit example new_example:latest
+
+docker container run -it --rm <NEW_NAME_YOU_CHOSE>:<TAG> dpkg -l nginx
+$ docker container run -it --rm new_example:latest dpkg -l nginx
+
 ```
 
 #### Container
@@ -139,33 +145,34 @@ docker rm $(docker ps -a -q) -f 2>/dev/null  || echo "0 containers running"
 :heavy_dollar_sign: view container processes, consume and info
 
 ```
-docker container top ID_OR_NAME 
+docker container top <CONTAINER_NAME_OR_ID>
+
 docker container stats
-docker container stats ID_OR_NAME
-docker container inspect ID_OR_NAME
-docker container inspect -f {{.NetworkSettings}} ID_OR_NAME
+docker container stats <CONTAINER_NAME_OR_ID>
+
 ```
 
 :heavy_dollar_sign: inspect
 
 ```
+docker container inspect <CONTAINER_NAME_OR_ID>
+docker container inspect -f {{.NetworkSettings}} <CONTAINER_NAME_OR_ID>
+$ docker container inspect -f {{.NetworkSettings}} festive_elbakyan
+
 # Get an instance’s IP address
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $INSTANCE_ID 
-(Output ex: 172.17.0.2)
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <CONTAINER_NAME_OR_ID>
 
 # Get an instance’s MAC address
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.MacAddress}}{{end}}' $INSTANCE_ID
-(Output ex: 02:42:ac:11:00:02)
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.MacAddress}}{{end}}' <CONTAINER_NAME_OR_ID>
 
 # Get an instance’s log path
-docker inspect --format='{{.LogPath}}' $INSTANCE_ID
+docker inspect --format='{{.LogPath}}' <CONTAINER_NAME_OR_ID>
 
 # Get an instance’s image name
-docker inspect --format='{{.Config.Image}}' $INSTANCE_ID
+docker inspect --format='{{.Config.Image}}' <CONTAINER_NAME_OR_ID>
 
 # List all port bindings
-docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' $INSTANCE_ID
-(Output ex: 80/tcp -> 80)
+docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} -> {{(index $conf 0).HostPort}} {{end}}' <CONTAINER_NAME_OR_ID>
 ```
 
 :heavy_dollar_sign: stop/start containers
@@ -174,9 +181,8 @@ docker container stop mypython
 docker container start mypython
 ```
 
+#### Dockerfile
 
-
-* Dockerfile and build image
 ```
 FROM ubuntu:16.04
 RUN apt-get update && apt-get install nginx -y
