@@ -24,6 +24,8 @@ docker info
 
 #### Images
 
+:heavy_dollar_sign: general
+
 ```
 # List all images
 docker image list
@@ -43,6 +45,21 @@ $ docker image rm python:latest -f
 
 # Remove all images
 docker rmi -f $(docker images -a -q)
+```
+
+:heavy_dollar_sign: create image
+
+```
+docker container run -it --name containerxyz ubuntu:16.04 bash
+
+apt-get update
+apt-get install nginx -y
+exit
+
+docker container stop containerxyz
+
+docker container commit containerxyz myubuntu:nginx
+docker container run -it --rm myubuntu:nginx dpkg -l nginx
 ```
 
 #### Container
@@ -92,13 +109,13 @@ docker container inspect -f {{.HostConfig.CpuShares}} <CONTAINER_ID_OR_NAME>
 $ docker container inspect -f {{.HostConfig.CpuShares}} 49ecaa5707b5
 ```
 
-:heavy_dollar_sign:container ls 
+:heavy_dollar_sign: container ls 
 
 ```
 docker container ls <parameters>
 ```
 
-The parameters most used in the execution of the container are:
+The most used parameters in the container listing are:
 
 | Parameter | Explanation                                              |
 |-----------|----------------------------------------------------------|
@@ -107,14 +124,20 @@ The parameters most used in the execution of the container are:
 | -n        | Lists the last N containers, including disconnected ones |
 | -q        | List only container ids, great for scripting             |
 
-
-
 ```
+docker container ls -a
+
+docker container ls -n <NUMBER>
+$ docker container ls -n 1
+
+docker container ls -1
+
 # Remove all containers
 docker rm $(docker ps -a -q) -f 2>/dev/null  || echo "0 containers running" 
 ```
 
-* View container processes, consume and info
+:heavy_dollar_sign: view container processes, consume and info
+
 ```
 docker container top ID_OR_NAME 
 docker container stats
@@ -123,7 +146,8 @@ docker container inspect ID_OR_NAME
 docker container inspect -f {{.NetworkSettings}} ID_OR_NAME
 ```
 
-* Inspect
+:heavy_dollar_sign: inspect
+
 ```
 # Get an instance’s IP address
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $INSTANCE_ID 
@@ -144,25 +168,13 @@ docker inspect --format='{{range $p, $conf := .NetworkSettings.Ports}} {{$p}} ->
 (Output ex: 80/tcp -> 80)
 ```
 
-* Stop and Start containers
+:heavy_dollar_sign: stop/start containers
 ```
 docker container stop mypython
 docker container start mypython
 ```
 
-* Create image
-```
-docker container run -it --name containerxyz ubuntu:16.04 bash
 
-apt-get update
-apt-get install nginx -y
-exit
-
-docker container stop containerxyz
-
-docker container commit containerxyz myubuntu:nginx
-docker container run -it --rm myubuntu:nginx dpkg -l nginx
-```
 
 * Dockerfile and build image
 ```
