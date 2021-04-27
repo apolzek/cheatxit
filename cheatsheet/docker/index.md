@@ -34,7 +34,7 @@ docker image ls
 docker image pull <IMAGE_ID_OR_NAME>:<TAG>
 $ docker image pull python:2.7
 
-docker image inspect <IMAGE_ID_OR_NAME>
+docker image inspect <IMAGE_ID_OR_NAME>:<TAG>
 $ docker image inspect python:2.7
 
 docker image history <IMAGE_ID_OR_NAME>:<TAG>
