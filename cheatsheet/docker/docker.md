@@ -1,5 +1,5 @@
 
-# Docker / Docker Swarm :whale2:
+# Docker | Docker Swarm :whale2:
 
 ## References
 
@@ -145,9 +145,13 @@ docker rm $(docker ps -a -q) -f 2>/dev/null  || echo "0 containers running"
 :heavy_dollar_sign: view container processes, consume and info
 
 ```
+# Container consumption data
 docker container top <CONTAINER_NAME_OR_ID>
 
+# Container consumption data
 docker container stats
+
+# Consumption status of a container
 docker container stats <CONTAINER_NAME_OR_ID>
 
 ```
@@ -155,9 +159,10 @@ docker container stats <CONTAINER_NAME_OR_ID>
 :heavy_dollar_sign: inspect
 
 ```
+# Container inspect
 docker container inspect <CONTAINER_NAME_OR_ID>
 docker container inspect -f {{.NetworkSettings}} <CONTAINER_NAME_OR_ID>
-$ docker container inspect -f {{.NetworkSettings}} festive_elbakyan
+docker container inspect -f {{.NetworkSettings}} festive_elbakyan
 
 # Get an instance’s IP address
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <CONTAINER_NAME_OR_ID>
@@ -191,22 +196,22 @@ CMD bash
 ```
 
 ```
-docker image build -t myubuntu:nginx_auto .
+# Build new image
+docker image build -t <name>:<tag> .
+docker image build -t myimage:1.0 .
 ```
 
-* Dockerhub/Images
+:heavy_dollar_sign: Dockerhub
 ```
-docker tag docker-is-cool DOCKER_ID/docker-is-cool:latest
 docker login
 docker image push
-docker images rm -f IMAGE_ID
-docker rmi -f IMAGE_ID
 ```
 
-* Volumes
+:heavy_dollar_sign: volumes
 ```
 # Requires the host to have a specific folder for the container to function properly
-docker container run -v /var/lib/containerx:/var ubuntu
+docker container run -v /var/lib/<folder>:/var ubuntu
+docker container run -v /var/lib/example:/var ubuntu
 ```
 
 ```
@@ -219,7 +224,7 @@ docker volume create --name dbdata
 docker container run -d -v dbdata:/var/lib/data postgres
 ```
 
-* Network 
+:heavy_dollar_sign: network 
 ```
 # Bridge => Internal communication between containers, Standard network 172.17.0.0/16
 # Host => You don't need to publish a door. Does not work in swarm mode
@@ -228,11 +233,12 @@ docker container run -d -v dbdata:/var/lib/data postgres
 iptables -t nat -L
 
 docker network ls
-docker network inspect NETWORK_NAME
+docker network inspect <NETWORK_NAME>
 
 docker container run -d --name db -e MYSQL_ROOT_PASSWORD=myp@ss mysql
 docker container run -d -p 80:80 --name app --link db tutum/apache-php
-docker container run -d -P nginx # Publish port randomly
+# Publish port randomly
+docker container run -d -P nginx
 docker container exec -it app ping db
 
 docker container run --name net_host1 -d --network host nginx:alpine
@@ -240,22 +246,22 @@ docker container run -d --name h_none --network none nginx:alpine
 docker network create my_custom_net --subnet 192.168.134.0/24 --gateway 192.168.134.1
 docker container run --name webhost -d --network my_custom_net nginx
 docket network prune
-docker network connect NETWORK_NAME CONTAINER_ID_OR_NAME
+docker network connect <NETWORK_NAME> <CONTAINER_ID_OR_NAME>
 ```
 
-* Dockerhub 
+:heavy_dollar_sign: Build and Push
 ```
-docker build -t <your_username>/my-first-repo . 
-docker run <your_username>/my-first-repo
-docker push <your_username>/my-first-repo
+docker build -t <your_username>/artifact_name . 
+docker run <your_username>/artifact_name
+docker push <your_username>/artifact_name
 ```
 
 ---
 
-### Troubleshooting
+#### Troubleshooting
 
 
-* Useful commands
+:heavy_dollar_sign: Useful commands
 
 ```
 docker run busybox ping -c 1 192.203.230.10
@@ -269,11 +275,10 @@ docker run --dns 10.0.0.2 busybox nslookup google.com
 }
 sudo service docker restart
 ```
----
 
-### Docker Swarm
+#### Docker Swarm
 
-* Basic commands
+:heavy_dollar_sign: Basic commands
 
 ```
 # Set up master
@@ -334,9 +339,7 @@ docker service ps --filter desired-state=running <service id|name>
 docker service logs --follow <service id|name>
 ```
 
----
-
-### Most used services
+#### Most used services
 
 ```
 docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
@@ -346,6 +349,3 @@ docker run -d --name konga --network host -p 1337:1337 pantsel/konga
 docker run -d -p 3000:3000 --name grafana grafana/grafana:6.5.0
 docker run -it -v $PWD:/app -w /app --entrypoint "" hashicorp/terraform:light sh
 ```
-
-
-### Alias

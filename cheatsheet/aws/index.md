@@ -9,6 +9,12 @@
 
 ### Commands
 
+#### First Steps
+
+```
+aws configure
+```
+
 #### EKS
 
 ```
