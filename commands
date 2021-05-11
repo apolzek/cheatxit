@@ -1,4 +1,0 @@
-mycheatsheet -a linux -d "install package" -c "sudo apt-get update"
-mycheatsheet list
-mycheatsheet find <alias>
-mycheatsheet rm <alias or id>
