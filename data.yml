@@ -1,10 +1,16 @@
-linux:
-  id: <id>
-  update:
-  - update linux
-  - sudo apt-get update
-network:
-  id: <id>
-  update:
-  - update linux
-  - sudo apt-get update
+'140352660478512':
+  alias: alias
+  command: comando
+  description: ''
+'140441421003312':
+  alias: alias
+  command: comando
+  description: asdas
+'140033522891312':
+  alias: ''
+  command: comando
+  description: ''
+'140198856493616':
+  alias: alias
+  command: comando
+  description: xxxx
