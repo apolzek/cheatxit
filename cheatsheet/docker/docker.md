@@ -215,6 +215,11 @@ docker container run -v /var/lib/example:/var ubuntu
 ```
 
 ```
+cd /var/lib/docker/volumes/
+docker volume prune -f
+```
+
+```
 docker create -v /dbdata --name dbdata postgres /bin/true
 docker container run -d --volumes-from dbdata --name db2 postgres
 ```
