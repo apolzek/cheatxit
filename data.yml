@@ -1,16 +1,16 @@
-'140352660478512':
-  alias: alias
-  command: comando
-  description: ''
-'140441421003312':
-  alias: alias
-  command: comando
-  description: asdas
-'140033522891312':
-  alias: ''
-  command: comando
-  description: ''
 '140198856493616':
   alias: alias
   command: comando
   description: xxxx
+'140203659622960':
+  alias: bb
+  command: aa
+  description: cc
+'140009325693488':
+  alias: command
+  command: alias
+  description: description
+'140334020872752':
+  alias: command
+  command: alias
+  description: description
